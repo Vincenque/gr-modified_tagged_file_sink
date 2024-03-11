@@ -36,6 +36,6 @@ templates:
 cpp_templates:
     includes: ['#include <gnuradio/modified_tagged_file_sink_module/modified_tagged_file_sink.h>']
     declarations: 'modified_tagged_file_sink_module::modified_tagged_file_sink::sptr ${id};'
-    make: 'this->${id} = modified_tagged_file_sink_modulemodified_tagged_file_sinktagged_file_sink::make(${type.size}*${vlen}, ${samp_rate});'
+    make: 'this->${id} = modified_tagged_file_sink_module::modified_tagged_file_sink::tagged_file_sink::make(${type.size}*${vlen}, ${samp_rate});'
 
 file_format: 1

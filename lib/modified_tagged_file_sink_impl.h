@@ -26,6 +26,7 @@ class modified_tagged_file_sink_impl : public modified_tagged_file_sink
 private:
     enum class state_t { NOT_IN_BURST = 0, IN_BURST };
     string d_filename;
+    string d_previous_filename;
     bool d_append;
     const size_t d_itemsize;
     const double d_sample_rate;

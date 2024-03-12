@@ -32,15 +32,17 @@
 namespace gr {
 namespace modified_tagged_file_sink_module {
 
-modified_tagged_file_sink::sptr modified_tagged_file_sink::make(size_t itemsize, double samp_rate)
+modified_tagged_file_sink::sptr modified_tagged_file_sink::make(string filename, bool append, size_t itemsize, double samp_rate)
 {
-    return gnuradio::make_block_sptr<modified_tagged_file_sink_impl>(itemsize, samp_rate);
+    return gnuradio::make_block_sptr<modified_tagged_file_sink_impl>(filename, append, itemsize, samp_rate);
 }
 
-modified_tagged_file_sink_impl::modified_tagged_file_sink_impl(size_t itemsize, double samp_rate)
+modified_tagged_file_sink_impl::modified_tagged_file_sink_impl(string filename, bool append, size_t itemsize, double samp_rate)
     : gr::sync_block("modified_tagged_file_sink",
                  io_signature::make(1, 1, itemsize),
                  io_signature::make(0, 0, 0)),
+      d_filename(filename),
+      d_append(append),
       d_itemsize(itemsize),
       d_sample_rate(samp_rate),
       d_state(state_t::NOT_IN_BURST),
@@ -129,29 +131,28 @@ int modified_tagged_file_sink_impl::work(int noutput_items,
                         // std::cout << "   time: " << d_timeval << std::endl;
                     }
                     d_last_N = N;
-
-                    std::string filename = fmt::format(
-                        "file{:d}_{:d}_{:.8f}.dat", unique_id(), d_n, d_timeval);
-                    d_logger->trace("New filename '{:s}'", filename);
+                    std::string file_name = fmt::format(
+                        "{:s}_{:d}.bin", d_filename, d_n);
+                    d_logger->trace("New file_name '{:s}'", file_name);
                     d_n++;
 
                     int fd;
-                    if ((fd = ::open(filename.c_str(),
+                    if ((fd = ::open(file_name.c_str(),
                                      O_WRONLY | O_CREAT | O_TRUNC | OUR_O_LARGEFILE |
                                          OUR_O_BINARY,
                                      0664)) < 0) {
-                        d_logger->error("::open {:s}:{:s}", filename, strerror(errno));
+                        d_logger->error("::open {:s}:{:s}", file_name, strerror(errno));
                         return -1;
                     }
 
                     // FIXME:
                     // if((d_handle = fdopen (fd, d_is_binary ? "wb" : "w")) == NULL) {
                     if ((d_handle = fdopen(fd, "wb")) == NULL) {
-                        d_logger->error("fdopen {:s}:{:s}", filename, strerror(errno));
+                        d_logger->error("fdopen {:s}:{:s}", file_name, strerror(errno));
                         ::close(fd); // don't leak file descriptor if fdopen fails.
                     }
 
-                    // std::cout << "Created new file: " << filename.str() << std::endl;
+                    // std::cout << "Created new file: " << file_name.str() << std::endl;
 
                     d_state = state_t::IN_BURST;
                     break;

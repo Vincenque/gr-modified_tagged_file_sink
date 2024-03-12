@@ -14,7 +14,7 @@
 /* BINDTOOL_GEN_AUTOMATIC(0)                                                       */
 /* BINDTOOL_USE_PYGCCXML(0)                                                        */
 /* BINDTOOL_HEADER_FILE(modified_tagged_file_sink.h)                                        */
-/* BINDTOOL_HEADER_FILE_HASH(5244465f2c7c895515c727fac16fa70f)                     */
+/* BINDTOOL_HEADER_FILE_HASH(89a05052790ee3eed51849a45d7142de)                     */
 /***********************************************************************************/
 
 #include <pybind11/complex.h>
@@ -29,29 +29,22 @@ namespace py = pybind11;
 
 void bind_modified_tagged_file_sink(py::module& m)
 {
-
     using modified_tagged_file_sink    = gr::modified_tagged_file_sink_module::modified_tagged_file_sink;
-
-
     py::class_<modified_tagged_file_sink, gr::sync_block, gr::block, gr::basic_block,
         std::shared_ptr<modified_tagged_file_sink>>(m, "modified_tagged_file_sink", D(modified_tagged_file_sink))
-
         .def(py::init(&modified_tagged_file_sink::make),
-           D(modified_tagged_file_sink,make)
-        )
-        
-
-
-
+             py::arg("filename"),
+             py::arg("append"),
+             py::arg("itemsize"),
+             py::arg("samp_rate"),
+             D(modified_tagged_file_sink,make))
+        .def("set_filename",
+             &modified_tagged_file_sink::set_filename,
+             py::arg("filename"),
+             D(modified_tagged_file_sink, set_filename))
+        .def("filename", &modified_tagged_file_sink::filename, D(modified_tagged_file_sink, filename))
         ;
-
-
-
-
 }
-
-
-
 
 
 

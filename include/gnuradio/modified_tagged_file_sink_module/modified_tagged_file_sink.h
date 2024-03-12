@@ -8,8 +8,13 @@
 #ifndef INCLUDED_MODIFIED_TAGGED_FILE_SINK_MODULE_MODIFIED_TAGGED_FILE_SINK_H
 #define INCLUDED_MODIFIED_TAGGED_FILE_SINK_MODULE_MODIFIED_TAGGED_FILE_SINK_H
 
+#include <string>
+#include <iostream>
+using namespace std;
+
 #include <gnuradio/modified_tagged_file_sink_module/api.h>
 #include <gnuradio/sync_block.h>
+
 
 namespace gr {
 namespace modified_tagged_file_sink_module {
@@ -19,8 +24,7 @@ namespace modified_tagged_file_sink_module {
  * \ingroup modified_tagged_file_sink_module
  *
  */
-class MODIFIED_TAGGED_FILE_SINK_MODULE_API modified_tagged_file_sink
-    : virtual public gr::sync_block
+class MODIFIED_TAGGED_FILE_SINK_MODULE_API modified_tagged_file_sink : virtual public gr::sync_block
 {
 public:
     typedef std::shared_ptr<modified_tagged_file_sink> sptr;
@@ -35,7 +39,16 @@ public:
      * modified_tagged_file_sink_module::modified_tagged_file_sink::make is the public
      * interface for creating new instances.
      */
-    static sptr make(size_t itemsize, double samp_rate);
+    static sptr make(string filename, bool append, size_t itemsize, double samp_rate);
+    /*!
+     * \brief Set the filename
+     *
+     * This method allows you to dynamically change the filename of the block.
+     *
+     * \param filename The new filename
+     */
+    virtual void set_filename(string filename) = 0;
+    virtual string filename() const = 0;
 };
 
 } // namespace modified_tagged_file_sink_module

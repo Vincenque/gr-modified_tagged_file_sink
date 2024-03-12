@@ -3,6 +3,15 @@ label: Modified Tagged File Sink
 category: '[Custom Modules]'
 
 parameters:
+-   id: file
+    label: File
+    dtype: file_save
+-   id: append
+    label: Append file
+    dtype: bool
+    default: 'False'
+    options: ['True', 'False']
+    option_labels: [Append, Overwrite]
 -   id: type
     label: Input Type
     dtype: enum
@@ -31,11 +40,19 @@ asserts:
 
 templates:
   imports: from gnuradio import modified_tagged_file_sink_module
-  make: modified_tagged_file_sink_module.modified_tagged_file_sink(${type.size}*${vlen}, ${samp_rate})
+  make: |-
+    modified_tagged_file_sink_module.modified_tagged_file_sink(${file}, ${append}, ${type.size}*${vlen}, ${samp_rate})
+    self.${id}.set_filename(${file})
+  callbacks:
+  - set_filename(${file})
 
 cpp_templates:
     includes: ['#include <gnuradio/modified_tagged_file_sink_module/modified_tagged_file_sink.h>']
     declarations: 'modified_tagged_file_sink_module::modified_tagged_file_sink::sptr ${id};'
-    make: 'this->${id} = modified_tagged_file_sink_module::modified_tagged_file_sink::tagged_file_sink::make(${type.size}*${vlen}, ${samp_rate});'
+    make: |-
+      this->${id} = modified_tagged_file_sink_module::modified_tagged_file_sink::make(${file}, ${append}, ${type.size}*${vlen}, ${samp_rate});
+      self->${id}.set_filename(${file})
+    callbacks:
+    - set_filename(${file})
 
 file_format: 1

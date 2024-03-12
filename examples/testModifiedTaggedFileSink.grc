@@ -62,6 +62,21 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
+- name: variable_qtgui_entry_0
+  id: variable_qtgui_entry
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: ''
+    type: string
+    value: test
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 144.0]
+    rotation: 0
+    state: true
 - name: block_test_bursts
   id: epy_block
   parameters:
@@ -99,6 +114,24 @@ blocks:
     coordinate: [600, 252.0]
     rotation: 0
     state: true
+- name: blocks_file_sink_0
+  id: blocks_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: ''
+    type: complex
+    unbuffered: 'True'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 372.0]
+    rotation: 0
+    state: disabled
 - name: blocks_file_source_0
   id: blocks_file_source
   parameters:
@@ -147,7 +180,9 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    append: 'False'
     comment: ''
+    file: variable_qtgui_entry_0+"1"
     samp_rate: samp_rate
     type: complex
     vlen: '1'
@@ -155,7 +190,25 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [896, 220.0]
+    coordinate: [896, 356.0]
+    rotation: 0
+    state: true
+- name: modified_tagged_file_sink_module_modified_tagged_file_sink_0_0
+  id: modified_tagged_file_sink_module_modified_tagged_file_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    append: 'False'
+    comment: ''
+    file: variable_qtgui_entry_0+"2"
+    samp_rate: samp_rate
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [896, 276.0]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -252,12 +305,14 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [896, 300.0]
+    coordinate: [896, 436.0]
     rotation: 0
     state: true
 
 connections:
 - [block_test_bursts, '0', modified_tagged_file_sink_module_modified_tagged_file_sink_0,
+  '0']
+- [block_test_bursts, '0', modified_tagged_file_sink_module_modified_tagged_file_sink_0_0,
   '0']
 - [block_test_bursts, '0', qtgui_time_sink_x_0, '0']
 - [blocks_file_source_0, '0', blocks_throttle2_0, '0']

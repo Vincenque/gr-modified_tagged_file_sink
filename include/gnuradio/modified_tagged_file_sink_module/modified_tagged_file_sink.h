@@ -8,8 +8,8 @@
 #ifndef INCLUDED_MODIFIED_TAGGED_FILE_SINK_MODULE_MODIFIED_TAGGED_FILE_SINK_H
 #define INCLUDED_MODIFIED_TAGGED_FILE_SINK_MODULE_MODIFIED_TAGGED_FILE_SINK_H
 
-#include <string>
 #include <iostream>
+#include <string>
 using namespace std;
 
 #include <gnuradio/modified_tagged_file_sink_module/api.h>
@@ -24,7 +24,8 @@ namespace modified_tagged_file_sink_module {
  * \ingroup modified_tagged_file_sink_module
  *
  */
-class MODIFIED_TAGGED_FILE_SINK_MODULE_API modified_tagged_file_sink : virtual public gr::sync_block
+class MODIFIED_TAGGED_FILE_SINK_MODULE_API modified_tagged_file_sink
+    : virtual public gr::sync_block
 {
 public:
     typedef std::shared_ptr<modified_tagged_file_sink> sptr;
@@ -33,11 +34,10 @@ public:
      * \brief Return a shared_ptr to a new instance of
      * modified_tagged_file_sink_module::modified_tagged_file_sink.
      *
-     * To avoid accidental use of raw pointers,
-     * modified_tagged_file_sink_module::modified_tagged_file_sink's constructor is in a
-     * private implementation class.
-     * modified_tagged_file_sink_module::modified_tagged_file_sink::make is the public
-     * interface for creating new instances.
+     * \param filename Name of file
+     * \param append Append file or overwrite
+     * \param itemsize Size of item
+     * \param samp_rate Sample rate
      */
     static sptr make(string filename, bool append, size_t itemsize, double samp_rate);
     /*!

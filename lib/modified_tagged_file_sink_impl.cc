@@ -32,15 +32,22 @@
 namespace gr {
 namespace modified_tagged_file_sink_module {
 
-modified_tagged_file_sink::sptr modified_tagged_file_sink::make(string filename, bool append, size_t itemsize, double samp_rate)
+modified_tagged_file_sink::sptr modified_tagged_file_sink::make(string filename,
+                                                                bool append,
+                                                                size_t itemsize,
+                                                                double samp_rate)
 {
-    return gnuradio::make_block_sptr<modified_tagged_file_sink_impl>(filename, append, itemsize, samp_rate);
+    return gnuradio::make_block_sptr<modified_tagged_file_sink_impl>(
+        filename, append, itemsize, samp_rate);
 }
 
-modified_tagged_file_sink_impl::modified_tagged_file_sink_impl(string filename, bool append, size_t itemsize, double samp_rate)
+modified_tagged_file_sink_impl::modified_tagged_file_sink_impl(string filename,
+                                                               bool append,
+                                                               size_t itemsize,
+                                                               double samp_rate)
     : gr::sync_block("modified_tagged_file_sink",
-                 io_signature::make(1, 1, itemsize),
-                 io_signature::make(0, 0, 0)),
+                     io_signature::make(1, 1, itemsize),
+                     io_signature::make(0, 0, 0)),
       d_filename(filename),
       d_previous_filename(filename),
       d_append(append),
@@ -132,12 +139,11 @@ int modified_tagged_file_sink_impl::work(int noutput_items,
                         // std::cout << "   time: " << d_timeval << std::endl;
                     }
                     d_last_N = N;
-                    if(d_filename != d_previous_filename){
+                    if (d_filename != d_previous_filename) {
                         d_previous_filename = d_filename;
                         d_n = 0;
                     }
-                    std::string file_name = fmt::format(
-                        "{:s}_{:d}.bin", d_filename, d_n);
+                    std::string file_name = fmt::format("{:s}_{:d}.bin", d_filename, d_n);
                     d_logger->trace("New file_name '{:s}'", file_name);
                     d_n++;
 

@@ -4,7 +4,7 @@ category: '[Custom Modules]'
 
 parameters:
 -   id: file
-    label: File
+    label: File name
     dtype: file_save
 -   id: append
     label: Append file

@@ -1,10 +1,4 @@
-/* -*- c++ -*- */
-/*
- * Copyright 2024 Witold Duda.
- *
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
-
+// modified_tagged_file_sink_impl.cc
 #include "modified_tagged_file_sink_impl.h"
 #include <gnuradio/io_signature.h>
 

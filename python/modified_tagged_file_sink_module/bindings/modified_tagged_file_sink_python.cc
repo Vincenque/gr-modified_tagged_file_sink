@@ -1,12 +1,4 @@
-/*
- * Copyright 2024 Free Software Foundation, Inc.
- *
- * This file is part of GNU Radio
- *
- * SPDX-License-Identifier: GPL-3.0-or-later
- *
- */
-
+// modified_tagged_file_sink_python.cc
 #include <pybind11/complex.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -14,7 +6,7 @@
 namespace py = pybind11;
 
 #include <gnuradio/modified_tagged_file_sink_module/modified_tagged_file_sink.h>
-// pydoc.h is automatically generated in the build directory
+
 #include <modified_tagged_file_sink_pydoc.h>
 
 void bind_modified_tagged_file_sink(py::module& m)
